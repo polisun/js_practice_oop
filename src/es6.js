@@ -6,15 +6,15 @@
 // Напишите функцию, которая принимает ФИО пользователя и возвращает
 // строку формата Имя Фамилия
 function fioToName(fio = 'Попов Илья Петрович') {
-    const name = fio.split(' ');
-    return name[1] + ' ' + name[0];
+    let [lastName, firstName] = fio.split(' ');
+    return `${firstName} ${lastName}`;
 }
 
 // преобразуйте массив чисел так, чтобы в нем остались только
 // уникальные элементы
 // присмотритесь к коллекции "Set"
 function filterUnique(array) {
-    let newSet = new Set(array);
+    const newSet = new Set(array);
     return Array.from(newSet);
 }
 
@@ -24,7 +24,8 @@ function filterUnique(array) {
 // сотрудника превышает зарплату самого низкооплачиваемого
 // присмотритесь к методу .reduce
 function calculateSalaryDifference(array) {
-    try {
+    if (!array.length) return false;
+    else {
         const max = array.reduce(function (acc, item) {
             if (acc < item) acc = item;
             return acc;
@@ -34,8 +35,6 @@ function calculateSalaryDifference(array) {
             return acc;
         });
         return max / min;
-    } catch (error) {
-        console.log('size === 0');
     }
 }
 
@@ -49,7 +48,7 @@ class Dictionary {
         this.map = new Map();
     }
     get(def) {
-        if (typeof def === 'string') return this.map.get(def);
+        if (typeof def === 'string' && this.map.has(def)) return this.map.get(def);
         else return false;
     }
     set(def, desc) {
